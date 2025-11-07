@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Creative Canvas - Art Store</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #fdf6f0;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      background-color: #5d3a00;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #f7e9d7;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      font-weight: 700;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav ul li a {
+      color: #f7e9d7;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: #b28635;
+      color: #fff;
+    }
+
+    /* Hamburger for mobile */
+    .menu-toggle {
+      display: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #f7e9d7;
+    }
+
+    /* Main */
+    main {
+      flex-grow: 1;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    main h2 {
+      font-size: 2.8rem;
+      color: #5d3a00;
+      margin-bottom: 15px;
+      text-align: center;
+      letter-spacing: 1.5px;
+    }
+
+    main p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      text-align: center;
+      line-height: 1.6;
+      color: #5d3a00;
+    }
+
+    .btn-explore {
+      display: block;
+      background-color: #b28635;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.2rem;
+      padding: 12px 50px;
+      border-radius: 40px;
+      border: none;
+      cursor: pointer;
+      margin: 0 auto 60px;
+      box-shadow: 0 5px 15px rgba(178, 134, 53, 0.6);
+      transition: background-color 0.3s ease;
+      text-align: center;
+    }
+
+    .btn-explore:hover {
+      background-color: #946d16;
+      box-shadow: 0 6px 20px rgba(148, 109, 22, 0.7);
+    }
+
+    /* Art Product Cards */
+    #gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .art-card {
+      background: #fff9f1;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      width: 280px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      color: #5d3a00;
+    }
+
+    .art-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    }
+
+    .art-card img {
+      width: 100%;
+      display: block;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .art-card-content {
+      padding: 15px 20px;
+    }
+
+    .art-card-content h3 {
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .art-card-content p {
+      font-size: 1rem;
+      margin-bottom: 15px;
+      line-height: 1.4;
+      color: #735c2a;
+    }
+
+    .art-card-content strong {
+      font-size: 1.2rem;
+      color: #b28635;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #5d3a00;
+      color: #f7e9d7;
+      text-align: center;
+      padding: 25px 40px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      margin-top: auto;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+    }
+
+    footer a {
+      color: #b28635;
+      text-decoration: none;
+      font-weight: 700;
+      margin: 0 10px;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        background-color: #5d3a00;
+        position: fixed;
+        top: 70px;
+        right: -220px;
+        width: 200px;
+        padding: 25px;
+        border-radius: 10px 0 0 10px;
+        gap: 20px;
+        transition: right 0.3s ease;
+      }
+
+      nav ul.open {
+        right: 0;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    @media (max-width: 600px) {
+      main h2 {
+        font-size: 2rem;
+      }
+      .art-card {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Creative Canvas</h1>
+  <nav>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+    <ul id="menu">
+      <li><a href="#home" onclick="closeMenu()">Home</a></li>
+      <li><a href="#gallery-section" onclick="closeMenu()">Gallery</a></li>
+      <li><a href="#about" onclick="closeMenu()">About</a></li>
+      <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="home">
+  <h2>Welcome to Creative Canvas</h2>
+  <p>Your one-stop destination for exquisite art pieces. Discover unique paintings and sculptures crafted by talented artists around the world.</p>
+  <button class="btn-explore" onclick="scrollToGallery()">Explore Gallery</button>
+</main>
+
+<section id="gallery-section" style="max-width:1200px; margin: 0 auto 60px; padding: 0 20px; text-align:center;">
+  <h2 style="color:#5d3a00; margin-bottom: 30px;">Gallery</h2>
+  <div id="gallery">
+    <!-- Art products will load here -->
+  </div>
+</section>
+
+<section id="about" style="max-width:900px; margin: 0 auto 60px; padding: 0 20px; text-align:center; color:#735c2a;">
+  <h2>About Us</h2>
+  <p>Creative Canvas was founded in 2010 with a passion to connect art lovers with exceptional artwork. We support independent artists and provide a platform to showcase their masterpieces.</p>
+</section>
+
+<section id="contact" style="max-width:600px; margin: 0 auto 80px; padding: 0 20px; text-align:center; color:#735c2a;">
+  <h2>Contact Us</h2>
+  <p>123 Art Lane, Brush City, AR 67890</p>
+  <p>Phone: (555) 123-4567</p>
+  <p>Email: hello@creativecanvas.com</p>
+</section>
+
+<footer>
+  <p>© 2025 Creative Canvas | Follow us on
+    <a href="#" target="_blank">Instagram</a> |
+    <a href="#" target="_blank">Facebook</a> |
+    <a href="#" target="_blank">Twitter</a>
+  </p>
+</footer>
+
+<script>
+  // Responsive menu toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('menu');
+
+  menuToggle.addEventListener('click', () => {
+    menu.classList.toggle('open');
+  });
+
+  function closeMenu() {
+    if(window.innerWidth <= 768) {
+      menu.classList.remove('open');
+    }
+  }
+
+  // Scroll to Gallery on button click
+  function scrollToGallery() {
+    document.getElementById('gallery-section').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Art products data
+  const artProducts = [
+    {
+      title: "Sunset Overdrive",
+      description: "Vibrant acrylic painting capturing a glowing sunset.",
+      price: "$550",
+      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      title: "Abstract Whispers",
+      description: "Modern abstract art with bold strokes and colors.",
+      price: "$430",
+      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      title: "The Serenity Sculpture",
+      description: "Smooth marble sculpture representing calmness and balance.",
+      price: "$980",
+      image: "https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      title: "Nature's Embrace",
+      description: "Watercolor painting portraying nature’s beauty.",
+      price: "$320",
+      image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=400&q=80"
+    },
+    {
+      title: "Golden Dreams",
+      description: "Mixed media piece with gold leaf accents and textured canvas.",
+      price: "$670",
+      image: "https://images.unsplash.com/photo-1486308510493-cb44a2b9c57c?auto=format&fit=crop&w=400&q=80"
+    }
+  ];
+
+  const gallery = document.getElementById('gallery');
+
+  function createArtCard(art) {
+    const card = document.createElement('div');
+    card.className = 'art-card';
+
+    card.innerHTML = `
+      <img src="${art.image}" alt="${art.title}">
+      <div class="art-card-content">
+        <h3>${art.title}</h3>
+        <p>${art.description}</p>
+        <strong>${art.price}</strong>
+      </div>
+    `;
+
+    return card;
+  }
+
+  artProducts.forEach(art => {
+    gallery.appendChild(createArtCard(art));
+  });
+</script>
+
+</body>
+</html>
